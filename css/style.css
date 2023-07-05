@@ -1,4 +1,27 @@
-#board {
+#grid {
     display: flex;
     background-color: #ffffff;
+}
+
+.column {  
+    border-left: 1px dashed black;
+    border-bottom: 1px dashed black;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.column:first-child {
+    border-top: 3px solid black;
+}
+
+.column:last-child {
+    border-bottom: 3px solid black;
+}
+
+.row:first-child > .column {
+    border-left: 3px solid black;
+}
+
+.row:last-child {
+    border-right: 3px solid black;
 }
