@@ -39,29 +39,35 @@ const gameBoard = (() => {
         const allSquares = Array.from(document.getElementsByClassName('column'));
 
         allSquares.forEach((square) => {
-            square.addEventListener('click', playerOne, {once: true});
+            square.addEventListener(
+                'click',
+                function () {
+                    takeTurn.call(this, displayController.playerOne, displayController.playerTwo);
+                },
+                {once: true}
+            );
         });
-
-        function playerOne() {
-            this.textContent = displayController.playerOne.mark;
-
-            const emptySquares = allSquares.filter(square => square.textContent === "");
-
-            emptySquares.forEach((square) => {
-                square.removeEventListener('click', playerOne);
-                square.addEventListener('click', playerTwo, {once: true});
-            });
-           
-        }
-       
-        function playerTwo() {
-            this.textContent = displayController.playerTwo.mark;
+        
+        function takeTurn(firstPlayer, secondPlayer) {
+            this.textContent = firstPlayer.mark;
 
             const emptySquares = allSquares.filter(square => square.textContent === "");
 
             emptySquares.forEach((square) => {
-            square.removeEventListener('click', playerTwo);
-                square.addEventListener('click', playerOne, {once: true});
+                square.removeEventListener(
+                    'click',
+                    function () {
+                        takeTurn.call(this, firstPlayer, secondPlayer);
+                    }
+                );
+              
+                square.addEventListener(
+                    'click',
+                    function () {
+                        takeTurn.call(this, secondPlayer, firstPlayer);
+                    },
+                    {once: true}
+                );
             });
         }
     } 
