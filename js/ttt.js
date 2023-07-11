@@ -2,6 +2,15 @@ const Player = (name, mark) => {
     return {name, mark};
 };
 
+const displayController = (() => {
+    const getName = () => prompt('Name?');
+    const getMark = () => prompt('Mark?');
+    const playerOne = Player(getName(), getMark());
+    const playerTwo = Player(getName(), getMark());
+
+    return {playerOne, playerTwo};
+})();
+
 const gameBoard = (() => {
     const board = ["","","","","","","","",""];
 
@@ -26,25 +35,39 @@ const gameBoard = (() => {
         }
     }
 
-    function addMarks() {
-        const squares = document.getElementsByClassName('column');
+    function addPlayerMark() {
+        const allSquares = Array.from(document.getElementsByClassName('column'));
 
-        for (let square of squares) {
-            square.addEventListener('click', () => alert('Clicked!'));
+        allSquares.forEach((square) => {
+            square.addEventListener('click', playerOne, {once: true});
+        });
+
+        function playerOne() {
+            this.textContent = displayController.playerOne.mark;
+
+            const emptySquares = allSquares.filter(square => square.textContent === "");
+
+            emptySquares.forEach((square) => {
+                square.removeEventListener('click', playerOne);
+                square.addEventListener('click', playerTwo, {once: true});
+            });
+           
         }
-    }
+       
+        function playerTwo() {
+            this.textContent = displayController.playerTwo.mark;
 
-    return {board, createGameBoard, addMarks};
+            const emptySquares = allSquares.filter(square => square.textContent === "");
+
+            emptySquares.forEach((square) => {
+            square.removeEventListener('click', playerTwo);
+                square.addEventListener('click', playerOne, {once: true});
+            });
+        }
+    } 
+
+    return {board, createGameBoard, addPlayerMark};
 })();
 
 gameBoard.createGameBoard();
-gameBoard.addMarks();
-
-// const displayController = (() => {
-//     const getName = () => prompt('Name?');
-//     const getMark = () => prompt('Mark?');
-//     const playerOne = Player(getName(), getMark());
-//     const playerTwo = Player(getName(), getMark());
-
-//     return {playerOne, playerTwo};
-// })();
+gameBoard.addPlayerMark();
