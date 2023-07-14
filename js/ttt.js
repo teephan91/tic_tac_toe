@@ -29,6 +29,7 @@ const gameBoard = (() => {
             for (let y = 0; y < 3; y++) {
                 const column = document.createElement('div');
                 column.textContent = gameBoard.board[z];
+                column.setAttribute('id', `${z}`);
                 z++;
                 rows[x].appendChild(column).className = 'column'; 
             }
@@ -50,6 +51,7 @@ const gameBoard = (() => {
         
         function takeTurn(firstPlayer, secondPlayer) {
             this.textContent = firstPlayer.mark;
+            gameBoard.board[this.getAttribute('id')] = firstPlayer.mark;
 
             const emptySquares = allSquares.filter(square => square.textContent === "");
 
