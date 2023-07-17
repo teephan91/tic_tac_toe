@@ -12,7 +12,7 @@ const displayController = (() => {
 })();
 
 const gameBoard = (() => {
-    const board = ["","","","","","","","",""];
+    const board = [];
 
     function createGameBoard() {
         const grid = document.querySelector('#grid');
@@ -38,42 +38,44 @@ const gameBoard = (() => {
 
     function addPlayerMark() {
         const allSquares = Array.from(document.getElementsByClassName('column'));
-
+      
         allSquares.forEach((square) => {
-            square.addEventListener(
-                'click',
-                function () {
-                    takeTurn.call(this, displayController.playerOne, displayController.playerTwo);
-                },
-                {once: true}
-            );
+            square.addEventListener('click', handle1stPlayerClick, {once: true});
         });
-        
-        function takeTurn(firstPlayer, secondPlayer) {
-            this.textContent = firstPlayer.mark;
-            gameBoard.board[this.getAttribute('id')] = firstPlayer.mark;
-
-            const emptySquares = allSquares.filter(square => square.textContent === "");
-
-            emptySquares.forEach((square) => {
-                square.removeEventListener(
-                    'click',
-                    function () {
-                        takeTurn.call(this, firstPlayer, secondPlayer);
-                    }
-                );
-              
-                square.addEventListener(
-                    'click',
-                    function () {
-                        takeTurn.call(this, secondPlayer, firstPlayer);
-                    },
-                    {once: true}
-                );
-            });
+      
+        function handle1stPlayerClick() {
+            take1stPlayerTurn.call(this, displayController.playerOne, displayController.playerTwo);
         }
-    } 
+      
+        function take1stPlayerTurn() {
+            this.textContent = displayController.playerOne.mark;
+            gameBoard.board[this.getAttribute('id')] = displayController.playerOne.mark;
+      
+            const emptySquares = allSquares.filter((square) => square.textContent === '');
+      
+            emptySquares.forEach((square) => {
+                square.removeEventListener('click', handle1stPlayerClick);
+                square.addEventListener('click', handle2ndPlayerClick, {once: true});
+            });      
+        }
 
+        function handle2ndPlayerClick() {
+            take2ndPlayerTurn.call(this, displayController.playerTwo, displayController.playerOne);
+        }
+
+        function take2ndPlayerTurn() {
+            this.textContent = displayController.playerTwo.mark;
+            gameBoard.board[this.getAttribute('id')] = displayController.playerTwo.mark;
+      
+            const emptySquares = allSquares.filter((square) => square.textContent === '');
+      
+            emptySquares.forEach((square) => {
+                square.removeEventListener('click', handle2ndPlayerClick);
+                square.addEventListener('click', handle1stPlayerClick, {once: true});
+            });      
+        }
+    }
+    
     return {board, createGameBoard, addPlayerMark};
 })();
 
