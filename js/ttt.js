@@ -50,13 +50,16 @@ const gameBoard = (() => {
         function take1stPlayerTurn() {
             this.textContent = displayController.playerOne.mark;
             gameBoard.board[this.getAttribute('id')] = displayController.playerOne.mark;
-      
+            
+            let winnerCheckP1 = gameBoard.board.filter(x => x === displayController.playerOne.mark).length;
             const emptySquares = allSquares.filter((square) => square.textContent === '');
       
             emptySquares.forEach((square) => {
                 square.removeEventListener('click', handle1stPlayerClick);
                 square.addEventListener('click', handle2ndPlayerClick, {once: true});
-            });      
+            });  
+            
+            if (winnerCheckP1 > 2) {checkTheWinner(displayController.playerOne.mark)}
         }
 
         function handle2ndPlayerClick() {
@@ -66,17 +69,40 @@ const gameBoard = (() => {
         function take2ndPlayerTurn() {
             this.textContent = displayController.playerTwo.mark;
             gameBoard.board[this.getAttribute('id')] = displayController.playerTwo.mark;
-      
+            
+            let winnerCheckP2 = gameBoard.board.filter(x => x === displayController.playerTwo.mark).length;
             const emptySquares = allSquares.filter((square) => square.textContent === '');
       
             emptySquares.forEach((square) => {
                 square.removeEventListener('click', handle2ndPlayerClick);
                 square.addEventListener('click', handle1stPlayerClick, {once: true});
-            });      
+            });
+            
+            if (winnerCheckP2 > 2) {checkTheWinner(displayController.playerTwo.mark)}
+        }
+    }
+
+    function checkTheWinner(playerMark) {
+        let winnerCheck = gameBoard.board.reduce((arr, el, i) => {
+            if (el === playerMark) arr.push(i);
+            return arr;
+        }, []).toString();
+ 
+        switch(winnerCheck) {
+            case "0,1,2":
+            case "0,3,6":
+            case "0,4,8":
+            case "1,4,7":
+            case "2,4,6":
+            case "2,5,8":
+            case "3,4,5":
+            case "6,7,8":
+                alert('Winner');
+                break;
         }
     }
     
-    return {board, createGameBoard, addPlayerMark};
+    return {board, createGameBoard, addPlayerMark, checkTheWinner};
 })();
 
 gameBoard.createGameBoard();
