@@ -59,7 +59,7 @@ const gameBoard = (() => {
                 square.addEventListener('click', handle2ndPlayerClick, {once: true});
             });  
             
-            if (winnerCheckP1 > 2) {checkTheWinner(displayController.playerOne.mark)}
+            if (winnerCheckP1 > 2) {_checkTheWinner(displayController.playerOne.mark)}
         }
 
         function handle2ndPlayerClick() {
@@ -78,11 +78,11 @@ const gameBoard = (() => {
                 square.addEventListener('click', handle1stPlayerClick, {once: true});
             });
             
-            if (winnerCheckP2 > 2) {checkTheWinner(displayController.playerTwo.mark)}
+            if (winnerCheckP2 > 2) {_checkTheWinner(displayController.playerTwo.mark)}
         }
     }
 
-    function checkTheWinner(playerMark) {
+    function _checkTheWinner(playerMark) {
         const winningCombinations = [
             [0, 1, 2],
             [0, 3, 6],
@@ -97,11 +97,21 @@ const gameBoard = (() => {
         const winningMoves = winningCombinations.filter((combination) => {return combination.every((index) => gameBoard.board[index] === playerMark);});
           
         if (winningMoves.length > 0) {
-            alert('Winner');
+            _announceTheWinner(playerMark);
         }
     }
+
+    function _announceTheWinner(playerMark) {
+        alert(`Player ${playerMark} wins the round!!!`);
+        _disableWindow();
+    }
+
+    function _disableWindow() {
+        const overlay = document.getElementById('overlay');
+        overlay.style.display = 'block';
+    }
     
-    return {board, createGameBoard, addPlayerMark, checkTheWinner};
+    return {board, createGameBoard, addPlayerMark};
 })();
 
 gameBoard.createGameBoard();
