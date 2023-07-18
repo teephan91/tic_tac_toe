@@ -83,22 +83,21 @@ const gameBoard = (() => {
     }
 
     function checkTheWinner(playerMark) {
-        let winnerCheck = gameBoard.board.reduce((arr, el, i) => {
-            if (el === playerMark) arr.push(i);
-            return arr;
-        }, []).toString();
- 
-        switch(winnerCheck) {
-            case "0,1,2":
-            case "0,3,6":
-            case "0,4,8":
-            case "1,4,7":
-            case "2,4,6":
-            case "2,5,8":
-            case "3,4,5":
-            case "6,7,8":
-                alert('Winner');
-                break;
+        const winningCombinations = [
+            [0, 1, 2],
+            [0, 3, 6],
+            [0, 4, 8],
+            [1, 4, 7],
+            [2, 4, 6],
+            [2, 5, 8],
+            [3, 4, 5],
+            [6, 7, 8],
+        ];
+          
+        const winningMoves = winningCombinations.filter((combination) => {return combination.every((index) => gameBoard.board[index] === playerMark);});
+          
+        if (winningMoves.length > 0) {
+            alert('Winner');
         }
     }
     
