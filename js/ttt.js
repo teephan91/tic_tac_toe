@@ -96,8 +96,12 @@ const gameBoard = (() => {
           
         const winningMoves = winningCombinations.filter((combination) => {return combination.every((index) => gameBoard.board[index] === playerMark);});
           
+        const drawOrNot= gameBoard.board.includes(undefined);
+
         if (winningMoves.length > 0) {
             _announceTheWinner(playerMark);
+        } else if (!drawOrNot) {
+            alert('This is a draw!');
         }
     }
 
