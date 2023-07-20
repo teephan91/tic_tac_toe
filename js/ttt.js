@@ -100,8 +100,9 @@ const gameBoard = (() => {
 
         if (winningMoves.length > 0) {
             _announceTheWinner(playerMark);
-        } else if (!drawOrNot) {
+        } else if ((!drawOrNot) && (gameBoard.board.length === 9))  {
             alert('This is a draw!');
+            _disableWindow();
         }
     }
 
