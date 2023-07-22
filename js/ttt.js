@@ -1,12 +1,27 @@
-const Player = (name, mark) => {
-    return {name, mark};
+const Player = (mark) => {
+    return {mark};
 };
 
 const displayController = (() => {
-    const getName = () => prompt('Name?');
-    const getMark = () => prompt('Mark?');
-    const playerOne = Player(getName(), getMark());
-    const playerTwo = Player(getName(), getMark());
+    var playerOne = Player('X');
+    var playerTwo = Player('O');
+
+    const openingOverlay = document.getElementById('opening_overlay');
+    const markX = document.getElementById('mark_x');
+    const markO = document.getElementById('mark_o');
+
+    markX.addEventListener('click', _assignMarkX, {once: true});
+    markO.addEventListener('click', _assignMarkO, {once: true});
+
+    function _assignMarkX() {
+        openingOverlay.style.display = 'none';
+    }
+
+    function _assignMarkO() {
+        playerOne.mark = this.textContent;
+        playerTwo.mark = markX.textContent;
+        openingOverlay.style.display = 'none';
+    }
 
     return {playerOne, playerTwo};
 })();
