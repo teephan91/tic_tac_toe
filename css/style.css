@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
+
 #grid {
     display: flex;
     background-color: #ffffff;
@@ -26,13 +29,61 @@
     border-right: 3px solid black;
 }
 
-#overlay {
+#opening_overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
+    background-color: rgba(128, 128, 128, 0.3); 
+    z-index: 1; 
+    pointer-events: auto;
+}    
+    
+    #opening_overlay > div {
+        position: relative;
+        top: 20%;
+        margin: auto;
+        width: 250px;
+        height: 250px;
+        border: 3px solid black;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: #eeeeee;
+        font-family: Lato, sans-serif;
+    }
+
+    #opening_overlay p,
+    #opening_overlay button {
+        font-size: 25px;
+    }
+
+    #opening_overlay button {
+        background-color: #27b498;
+        color: #ffffff;
+        border: 3px solid black;
+    }
+
+    #opening_overlay button:hover {
+        background-color: #fac60c;
+        color: #000000;
+    }
+
+    #opening_overlay div div {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+#closing_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(128, 128, 128, 0.3); 
     z-index: 9999; 
     pointer-events: auto;
     display: none;
