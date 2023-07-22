@@ -112,8 +112,8 @@ const gameBoard = (() => {
     }
 
     function _disableWindow() {
-        const overlay = document.getElementById('overlay');
-        overlay.style.display = 'block';
+        const closingOverlay = document.getElementById('closing_overlay');
+        closingOverlay.style.display = 'block';
     }
     
     return {board, createGameBoard, addPlayerMark};
