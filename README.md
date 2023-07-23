@@ -39,6 +39,7 @@ cd tic_tac_toe
 or
 ```
 cd [your-forked-repo-name]
+```
 
 ## Support
 Please feel free to reach out if you need any help with this repo. 👉🏼 therealthinhphan@gmail.com
