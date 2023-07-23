@@ -152,3 +152,42 @@ footer {
 .github:hover {
     transform: scale(1.2);
 }
+
+@media only screen and (max-width: 480px) {
+    body {
+        justify-content: space-around;
+    }
+
+
+    #opening_overlay > div,
+    #closing_overlay > div {
+        width: 200px;
+        height: 200px;
+        top: 30%;
+    }
+
+    #opening_overlay p,
+    #opening_overlay button,
+    #closing_overlay p,
+    #closing_overlay button {
+        font-size: 22px;
+    }
+
+    h1 {
+        font-size: 60px;
+        margin: 10px 0;
+    }
+
+    #tracking_board {
+        font-size: 22px;
+    }
+
+    .column {
+        width: 100px;
+        height: 100px;
+    }
+
+    #try_again {
+        font-size: 22px;
+    }
+}
