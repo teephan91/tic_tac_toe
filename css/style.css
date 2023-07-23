@@ -118,6 +118,11 @@ h1 {
     padding: 10px 20px;
 }
 
+    #try_again:hover {
+        background-color: #fac60c;
+        color: #000000;
+    }
+
 #closing_overlay {
     position: fixed;
     top: 0;
