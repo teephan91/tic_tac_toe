@@ -191,3 +191,14 @@ footer {
         font-size: 22px;
     }
 }
+
+@media only screen and (min-width: 481px) and (max-width: 1024px) {
+    body {
+        justify-content: space-around;
+    }
+
+    #opening_overlay > div,
+    #closing_overlay > div {
+        top: 35%;
+    }
+}
