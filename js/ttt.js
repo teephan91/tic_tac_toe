@@ -7,6 +7,7 @@ const displayController = (() => {
     var playerTwo = Player('O');
 
     const openingOverlay = document.getElementById('opening_overlay');
+    const trackingBoard = document.getElementById('tracking_board');
     const markX = document.getElementById('mark_x');
     const markO = document.getElementById('mark_o');
 
@@ -15,15 +16,21 @@ const displayController = (() => {
 
     function _assignMarkX() {
         openingOverlay.style.display = 'none';
+        keepTurn(playerOne.mark);
     }
 
     function _assignMarkO() {
         playerOne.mark = this.textContent;
         playerTwo.mark = markX.textContent;
         openingOverlay.style.display = 'none';
+        keepTurn(this.textContent);
     }
 
-    return {playerOne, playerTwo};
+    function keepTurn(playerMark) {
+        trackingBoard.textContent = `This is ${playerMark}'s turn!`;
+    }
+
+    return {playerOne, playerTwo, keepTurn};
 })();
 
 const gameBoard = (() => {
@@ -64,6 +71,7 @@ const gameBoard = (() => {
       
         function take1stPlayerTurn() {
             this.textContent = displayController.playerOne.mark;
+            displayController.keepTurn(displayController.playerTwo.mark);
             gameBoard.board[this.getAttribute('id')] = displayController.playerOne.mark;
             
             let winnerCheckP1 = gameBoard.board.filter(x => x === displayController.playerOne.mark).length;
@@ -83,6 +91,7 @@ const gameBoard = (() => {
 
         function take2ndPlayerTurn() {
             this.textContent = displayController.playerTwo.mark;
+            displayController.keepTurn(displayController.playerOne.mark);
             gameBoard.board[this.getAttribute('id')] = displayController.playerTwo.mark;
             
             let winnerCheckP2 = gameBoard.board.filter(x => x === displayController.playerTwo.mark).length;
