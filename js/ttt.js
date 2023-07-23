@@ -10,6 +10,7 @@ const displayController = (() => {
     const trackingBoard = document.getElementById('tracking_board');
     const markX = document.getElementById('mark_x');
     const markO = document.getElementById('mark_o');
+    const closingOverlay = document.getElementById('closing_overlay');
 
     markX.addEventListener('click', _assignMarkX, {once: true});
     markO.addEventListener('click', _assignMarkO, {once: true});
@@ -30,7 +31,25 @@ const displayController = (() => {
         trackingBoard.textContent = `This is ${playerMark}'s turn!`;
     }
 
-    return {playerOne, playerTwo, keepTurn};
+    function announceTheWinner(playerMark) {
+        const newDiv = document.createElement('div');
+        const announcePara = document.createElement('p');
+        const restartBtn = document.createElement('button');
+
+        closingOverlay.appendChild(newDiv);
+        newDiv.appendChild(announcePara);
+        newDiv.appendChild(restartBtn);
+
+        (playerMark === 'draw') ? announcePara.textContent = 'This is a draw.' : announcePara.textContent = `Player ${playerMark} won!`;
+        restartBtn.textContent = 'Restart';
+        closingOverlay.style.display = 'block';
+
+        restartBtn.addEventListener('click', () => {
+            window.location.reload();
+        }, {once: true});
+    }
+
+    return {playerOne, playerTwo, keepTurn, announceTheWinner};
 })();
 
 const gameBoard = (() => {
@@ -123,21 +142,10 @@ const gameBoard = (() => {
         const drawOrNot= gameBoard.board.includes(undefined);
 
         if (winningMoves.length > 0) {
-            _announceTheWinner(playerMark);
+            displayController.announceTheWinner(playerMark);
         } else if ((!drawOrNot) && (gameBoard.board.length === 9))  {
-            alert('This is a draw!');
-            _disableWindow();
+            displayController.announceTheWinner('draw');
         }
-    }
-
-    function _announceTheWinner(playerMark) {
-        alert(`Player ${playerMark} wins the round!!!`);
-        _disableWindow();
-    }
-
-    function _disableWindow() {
-        const closingOverlay = document.getElementById('closing_overlay');
-        closingOverlay.style.display = 'block';
     }
     
     return {board, createGameBoard, addPlayerMark};
